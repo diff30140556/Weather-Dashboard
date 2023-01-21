@@ -1,0 +1,95 @@
+/* initialize setting */
+*,*::after,*::before{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+header{
+    border: 1px solid #000;
+    text-align: center;
+    background: linear-gradient(to right, rgb(168, 201, 250), rgb(65, 86, 243));
+    color: rgb(255, 246, 69);
+    font-size: 1.2em;
+}
+
+.content{
+    border: 1px solid #000;
+    display: flex;
+}
+
+.search-bar{
+    border: 1px solid #000;
+    padding: 10px 20px;
+    width: 30%;
+}
+
+.search-bar input{
+    display: block;
+    width: 100%;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    box-shadow: rgb(44, 44, 44) 0 1.5px 3px 1px;
+    outline: none;
+    border: none;
+    
+}
+
+.search-btn{
+    display: block;
+    width: 100%;
+    padding: 7px 0;
+    border-radius: 6px;
+    background: rgb(94, 128, 214);
+    color: #fff;
+    font-size: 1.1em;
+    border: none;
+    box-shadow: rgb(68, 68, 68) 0 3px 6.3px 0.2px;
+    transition: 0.2s ease-in-out;
+    margin-bottom: 25px;
+}
+.search-btn:hover{
+    cursor: pointer;
+    background: rgb(67, 109, 216);
+}
+
+.result{
+    width: 70%;
+    padding: 10px 25px;
+}
+
+.current-weather{
+    border: 1px solid #000;
+}
+
+.forecast{
+    border: 1px solid #000;
+}
+
+.forecast-list{
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+}
+
+.forecast-list li{
+    border: 1px solid #000;
+    width: 20%;
+    padding: 0 10px;
+    margin: 10px 5px;
+    color: #fff;
+    background: rgb(53, 58, 161);
+    border-radius: 8px;
+    font-size: 1.1em;
+}
+
+.us-state-selector{
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px 10px;
+    box-shadow: rgb(113, 113, 113) 0 2px 2px 0.2px;
+}
