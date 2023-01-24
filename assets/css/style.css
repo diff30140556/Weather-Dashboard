@@ -64,6 +64,17 @@ header{
     border: 1px solid #000;
 }
 
+.current-weather h2{
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.current-weather img{
+    margin-left: 10px;
+    width: 50px;
+}
+
 .forecast{
     border: 1px solid #000;
 }
