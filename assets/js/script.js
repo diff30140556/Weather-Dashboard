@@ -4,8 +4,9 @@ const stateEl = document.querySelector('.us-state-selector');
 const currentWeatherEl = document.querySelector('.current-weather');
 const forecastEl = document.querySelector('.forecast');
 
-// const searchBtnEL = document.querySelector('.search-btn');
 let APIkey = 'ec7477b8bf25c30e53208ecbb6569748';
+let city = '';
+let searchHistory = JSON.parse(localStorage.getItem('records')) || [];
 
 formEl.addEventListener('submit', getCityStateName);
 
@@ -31,12 +32,29 @@ function getCoordinates(city,state) {
                 return response.json();
             }
         })).then((data => {
-            console.log(data);
-            let lat = data[0].lat;
-            let lon = data[0].lon;
-            
-            getWeatherForecast(lat, lon);
+            if (data.length === 0){
+                console.log('wrong')
+            }else{
+                console.log(data);
+                let lat = data[0].lat;
+                let lon = data[0].lon;
+                getWeatherForecast(lat, lon);
+                saveHistoryToLocal(city, state);
+            }
+            cityEl.value=''
+            stateEl[0].selected = true;
         }))
+}
+
+function saveHistoryToLocal(city, state) {
+    console.log(city, state)
+    let recordObj = {
+        cityName: city,
+        stateName: state
+    }
+
+    searchHistory.push(recordObj);
+    
 }
 
 function getWeatherForecast(lat, lon) {
@@ -45,7 +63,6 @@ function getWeatherForecast(lat, lon) {
     let forecastParameters = '?lat=' + lat + '&lon=' + lon + '&appid=';
     let forecastAPIurl = forecastBaseUrl + forecastParameters + APIkey;
     let weatherAPIurl = weatherBaseUrl + forecastParameters + APIkey;
-    
     fetch( weatherAPIurl, {method: 'get'})
         .then((response) => {
             if (response.ok){
@@ -61,33 +78,66 @@ function getWeatherForecast(lat, lon) {
                 return response.json();
             }
         }).then((data => {
-            console.log(data);
+            renderForecast(data);
         }))
 }
 
-function renderCurrentWeather(currentData){
-    console.log(currentData);
-
-    let UNIXtimestamp = currentData.dt;
+function getDateByUNIXtimestamp(UNIXtimestamp) {
     let time = new Date(UNIXtimestamp * 1000);
-    let year = time.getFullYear();
     let month = time.getMonth() + 1;
     let date = time.getDate();
-    let currentDateString = '('+ month + '/' + date + '/' + year +')';
+    let year = time.getFullYear().toString().slice(-2);
 
-    let city = currentData.name;
-    let tempKelvin = currentData.main.temp;
-    let fahrenheit = ((tempKelvin - 273) * 1.8 + 32).toFixed(1);
-    let celsius = (tempKelvin - 273).toFixed(1);
-    let windSpeed = currentData.wind.speed;
-    let humidity = currentData.main.humidity;
-    let weatherIconCode = currentData.weather[0].icon;
-    let weatherIconUrl = 'https://openweathermap.org/img/wn/'+ weatherIconCode +'@2x.png';
+    return month + '/' + date + '/' + year;
+}
+
+function getWeatherDetail(data) {
+    let tempKelvin = data.main.temp;
+    let weatherIconCode = data.weather[0].icon;
+    
+    return {
+        tempKelvin: data.main.temp,
+        fahrenheit: ((tempKelvin - 273) * 1.8 + 32).toFixed(1),
+        windSpeed: data.wind.speed,
+        humidity: data.main.humidity,
+        weatherIconUrl: 'https://openweathermap.org/img/wn/'+ weatherIconCode +'@2x.png'
+    }
+}
+
+function renderCurrentWeather(currentData){
+    city = currentData.name;
+    let currentDateString = getDateByUNIXtimestamp(currentData.dt);
+    let currentWeatherDetail = getWeatherDetail(currentData);
 
     currentWeatherEl.innerHTML = 
-    `<h2>`+ city +` `+ currentDateString +`<span><img src="`+ weatherIconUrl +`" alt="weather-icon"></span></h2>
-    <p>Temp: `+ celsius +` &#8451 / `+ fahrenheit +` &#8457</p>
-    <p>Wind: `+ windSpeed +` MPH</p>
-    <p>Humidity: `+ humidity +` %</p>`;
+    `<h2>`+ city + `(` + currentDateString +`)<span><img src="`+ currentWeatherDetail.weatherIconUrl +`" alt="weather-icon"></span></h2>
+    <p>Temp: `+ currentWeatherDetail.fahrenheit +` &#8457</p>
+    <p>Wind: `+ currentWeatherDetail.windSpeed +` MPH</p>
+    <p>Humidity: `+ currentWeatherDetail.humidity +` %</p>`;
+}
 
+function renderForecast(forecastData) {
+    let forecastList = '';
+
+    let fiveDaysForecast = forecastData.list.filter( element =>{
+        return element.dt_txt.includes('00:00:00');
+    });
+
+    for (let i = 0; i < fiveDaysForecast.length; i++ ){
+        let forecastDateString = getDateByUNIXtimestamp(fiveDaysForecast[i].dt);
+        let forecastWeatherDetail = getWeatherDetail(fiveDaysForecast[i])
+
+        forecastList += 
+        `<li>
+            <h3>`+ forecastDateString +`</h3>
+            <div class="weather-icon"><img src="`+ forecastWeatherDetail.weatherIconUrl +`" alt="weather-icon"></div>
+            <p>Temp: `+ forecastWeatherDetail.fahrenheit +` &#8457</p>
+            <p>Wind: `+ forecastWeatherDetail.windSpeed +` MPH</p>
+            <p>Humidity: `+ forecastWeatherDetail.humidity +` %</p>
+        </li>`
+    }
+    
+    forecastEl.innerHTML = 
+    `<h2>5-Day Forecast</h2>
+    <ul class="forecast-list">`+ forecastList +`</ul>`
 }
