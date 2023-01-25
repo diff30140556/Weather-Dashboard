@@ -17,7 +17,7 @@
 
         <main class="content">
             <div class="search-bar">
-                <h2>Search for a city:</h2>
+                <h2>Search for a city by state:</h2>
                 <form class="search-city-form" action="">
                     <input class="city-input" type="text" required placeholder="City name...">
                     <select class="us-state-selector" required>
@@ -74,31 +74,21 @@
                         <option value="WI">Wisconsin</option>
                         <option value="WY">Wyoming</option>
                     </select>
-                    <input type="submit" class="search-btn" value="Search"></input>
+                    <input type="submit" class="btn" value="Search"></input>
                 </form>
                 <hr>
                 <div class="history">
-                    <ul class="history-list"></ul>
+                    <ul class="history-list">
+                        <li><button class="btn">Covina</button></li>
+                    </ul>
                 </div>
             </div>
             <div class="result">
                 <div class="current-weather">
-                    <h2>City (09/13/23)</h2>
-                    <p>Temp: 22 &#8451 / 76 &#8457</p>
-                    <p>Wind: 2.22 MPH</p>
-                    <p>Humidity: 44 %</p>
+
                 </div>
                 <div class="forecast">
-                    <h2>5-Day Forecast</h2>
-                    <ul class="forecast-list">
-                        <li>
-                            <h3>09/14/23</h3>
-                            <div class="weather-icon"></div>
-                            <p>Temp: 22 &#8451 / 76 &#8457</p>
-                            <p>Wind: 2.22 MPH</p>
-                            <p>Humidity: 44 %</p>
-                        </li>
-                    </ul>
+                    
                 </div>
             </div>
         </main>
