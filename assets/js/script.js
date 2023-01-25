@@ -3,6 +3,7 @@ const cityEl = document.querySelector('.city-input');
 const stateEl = document.querySelector('.us-state-selector');
 const currentWeatherEl = document.querySelector('.current-weather');
 const forecastEl = document.querySelector('.forecast');
+const recordsEl = document.querySelector('.history-list');
 
 let APIkey = 'ec7477b8bf25c30e53208ecbb6569748';
 let city = '';
@@ -53,9 +54,35 @@ function saveHistoryToLocal(city, state) {
         stateName: state
     }
 
+    searchHistory.filter( (element, index) => {
+        if (element.cityName === city) {
+            searchHistory.splice(index, 1)
+        }
+    })
+
     searchHistory.push(recordObj);
-    
+    localStorage.setItem('records', JSON.stringify(searchHistory));
+    renderRecords();
 }
+
+function renderRecords() {
+    let recordsStr = ''
+    for (let i = 0; i < searchHistory.length; i++){
+        recordsStr += `<li><button class="btn" data-state="`+ searchHistory[i].stateName +`">`+ searchHistory[i].cityName +`</button></li>`
+    }
+    recordsEl.innerHTML = recordsStr;
+}
+
+recordsEl.addEventListener('click', function(e) {
+    console.log(e.target.nodeName)
+    if (e.target.nodeName !== 'BUTTON'){
+        return;
+    }
+    let recordsCity = e.target.textContent;
+    let recordsState = e.target.dataset.state;
+
+    getCoordinates(recordsCity, recordsState)
+})
 
 function getWeatherForecast(lat, lon) {
     let forecastBaseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
@@ -141,3 +168,9 @@ function renderForecast(forecastData) {
     `<h2>5-Day Forecast</h2>
     <ul class="forecast-list">`+ forecastList +`</ul>`
 }
+
+function init(){
+    renderRecords();
+}
+
+init()
