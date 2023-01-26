@@ -1,30 +1,51 @@
 /* initialize setting */
-*,*::after,*::before{
+*,
+*::after,
+*::before {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
 
-header{
-    border: 1px solid #000;
+.wrap {
+    background: rgb(217, 237, 255);
+}
+
+/* header section */
+header {
     text-align: center;
     background: linear-gradient(to right, rgb(168, 201, 250), rgb(65, 86, 243));
     color: rgb(255, 246, 69);
     font-size: 1.2em;
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
 }
 
-.content{
-    border: 1px solid #000;
+header h1 {
+    margin: 0;
+}
+
+/* main content area setting */
+.content {
+    padding-top: 73px;
     display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    width: 95%;
+    min-height: 100vh;
+    max-width: 1400px;
 }
 
-.search-bar{
-    border: 1px solid #000;
+/* search area setting */
+.search-bar {
     padding: 10px 20px;
     width: 30%;
+    background: linear-gradient(rgb(203, 235, 255), rgb(171, 192, 255));
+    border-radius: 6px;
 }
 
-.search-bar input{
+.search-bar input {
     display: block;
     width: 100%;
     padding: 7px 10px;
@@ -34,10 +55,21 @@ header{
     box-shadow: rgb(44, 44, 44) 0 1.5px 3px 1px;
     outline: none;
     border: none;
-    
+
 }
 
-.btn{
+/* all states selector */
+.us-state-selector {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px 10px;
+    box-shadow: rgb(113, 113, 113) 0 2px 2px 0.2px;
+}
+
+/* button styling */
+.btn {
     display: block;
     width: 100%;
     padding: 7px 0;
@@ -50,59 +82,68 @@ header{
     transition: 0.2s ease-in-out;
     margin-bottom: 25px;
 }
-.btn:hover{
+
+.btn:hover {
     cursor: pointer;
     background: rgb(67, 109, 216);
 }
 
-.history-list{
+/* search history setting */
+.history-list {
     list-style: none;
     padding-left: 0;
 }
 
-.history-list .btn{
+.history-list .btn {
     background: rgb(167, 167, 167);
 }
 
-.history-list .btn:hover{
+.history-list .btn:hover {
     background: rgb(114, 114, 114);
 }
 
-.result{
-    width: 70%;
+/* search result setting */
+.result {
+    width: 0%;
+    background: #fff;
+    transition: 0.8s ease-in-out;
+}
+
+/* expand effect */
+.expand {
     padding: 10px 25px;
+    width: 70%;
 }
 
-.current-weather{
-    border: 1px solid #000;
+/* alert message when the city not found */
+.alert {
+    color: rgb(255, 88, 88);
 }
 
-.current-weather h2{
+/* current weather area */
+.current-weather h2 {
     display: flex;
     align-items: center;
     margin: 0;
 }
 
-.current-weather img{
+.current-weather img {
     margin-left: 10px;
     width: 50px;
 }
 
-.forecast{
-    border: 1px solid #000;
-}
-
-.forecast-list{
+/* forecast weather area */
+.forecast-list {
     list-style: none;
     padding-left: 0;
     display: flex;
     flex-wrap: wrap;
 }
 
-.forecast-list li{
-    border: 1px solid #000;
-    width: 18%;
+.forecast-list li {
+    width: 15%;
     max-width: 190px;
+    min-width: 130px;
     padding: 0 10px;
     margin: 10px 5px;
     color: #fff;
@@ -111,15 +152,59 @@ header{
     font-size: 1em;
 }
 
-.weather-icon img{
+.weather-icon img {
     width: 40px;
 }
 
-.us-state-selector{
-    margin-bottom: 20px;
-    font-size: 1.1em;
-    border-radius: 5px;
-    width: 100%;
-    padding: 5px 10px;
-    box-shadow: rgb(113, 113, 113) 0 2px 2px 0.2px;
+/* loading animation setting */
+.loader {
+    width: 60px;
+}
+
+.loader-wheel {
+    animation: spin 1s infinite linear;
+    border: 3px solid rgb(247, 110, 110);
+    border-left: 3px solid transparent;
+    border-radius: 50%;
+    height: 50px;
+    margin-bottom: 5px;
+    width: 50px;
+}
+
+.loader-text {
+    color: rgb(255, 98, 98);
+    font-family: arial, sans-serif;
+}
+
+.loader-text:after {
+    content: 'Loading';
+    animation: load 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes load {
+    0% {
+        content: 'Loading';
+    }
+
+    33% {
+        content: 'Loading.';
+    }
+
+    67% {
+        content: 'Loading..';
+    }
+
+    100% {
+        content: 'Loading...';
+    }
 }
