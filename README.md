@@ -14,7 +14,7 @@ N/A
 
 Enter the city and the state you want to review. Please note that you can only check the weather in the U.S.<br>
     
-![This is the demo](https://i.imgur.com/9Eh5Eon.png)
+![This is the demo](https://i.imgur.com/UTtracb.png)
 
 ## Reference
 I reference the loading animation from here on CodePen: <br>
