@@ -6,20 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather-Dashboard</title>
 
+    <!-- Normalize CSS reset -->
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <!-- custom CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
     <div class="wrap">
+        <!-- header section -->
         <header>
             <h1 class="title">Weather Dashboard</h1>
         </header>
-
+        <!-- main content -->
         <main class="content">
+            <!-- search area -->
             <div class="search-bar">
                 <h2>Search for a city by state:</h2>
                 <form class="search-city-form" action="">
                     <input class="city-input" type="text" required placeholder="City name...">
+                    <!-- selector for all states -->
                     <select class="us-state-selector" required>
                         <option disabled selected hidden value="">--Select State</option>
                         <option value="AL">Alabama</option>
@@ -77,20 +82,23 @@
                     <input type="submit" class="btn" value="Search"></input>
                 </form>
                 <hr>
+                <!-- search history -->
                 <div class="history">
                     <ul class="history-list"></ul>
                 </div>
             </div>
+            <!-- search result area -->
             <div class="result">
+                <!-- current weather -->
                 <div class="current-weather">
-
                 </div>
+                <!-- forecast weather -->
                 <div class="forecast">
-                    
                 </div>
             </div>
         </main>
     </div>
+    <!-- local JS file -->
     <script type="module" src="./assets/js/script.js"></script>
 </body>
 </html>
