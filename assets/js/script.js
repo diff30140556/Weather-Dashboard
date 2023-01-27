@@ -17,8 +17,8 @@ function getCityStateName(e) {
 
     let cityName = cityEl.value;
     let stateName = stateEl.value;
-    getCoordinates(cityName,stateName);
     loadingAnimate();
+    getCoordinates(cityName,stateName);
 }
 
 // Loading animation
@@ -28,6 +28,7 @@ function loadingAnimate() {
     <div class="loader-wheel"></div>
     <div class="loader-text"></div>
     </div>`
+    forecastEl.innerHTML = '';
 }
 
 // get a city's coordinates
